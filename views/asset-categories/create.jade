@@ -1,0 +1,12 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Create Asset Category
+    if error
+      div.alert.alert-danger= error
+    form(method='POST', action='/asset-categories/create')
+      .form-group
+        label(for='name') Category Name
+        input.form-control#name(type='text', name='name', value=category?.name, required)
+      button.btn.btn-primary(type='submit') Create Category

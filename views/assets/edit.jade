@@ -1,0 +1,45 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Edit Asset
+    if error
+      div.alert.alert-danger= error
+    form(method='POST', action='/assets/#{asset.id}/update')
+      .form-group
+        label(for='assetCode') Asset Code
+        input.form-control#assetCode(type='text', name='assetCode', value=asset.assetCode, readonly)
+      .form-group
+        label(for='serialNumber') Serial Number
+        input.form-control#serialNumber(type='text', name='serialNumber', value=asset.serialNumber)
+      .form-group
+        label(for='make') Make
+        input.form-control#make(type='text', name='make', value=asset.make, required)
+      .form-group
+        label(for='model') Model
+        input.form-control#model(type='text', name='model', value=asset.model, required)
+      .form-group
+        label(for='categoryId') Category
+        select.form-control#categoryId(name='categoryId')
+          option(value='') -- Select Category --
+          each category in categories
+            option(value=category.id, selected=asset.categoryId == category.id)= category.name
+      .form-group
+        label(for='branchId') Branch
+        select.form-control#branchId(name='branchId')
+          option(value='') -- Select Branch --
+          each branch in branches
+            option(value=branch.id, selected=asset.branchId == branch.id)= branch.name
+      .form-group
+        label(for='purchaseDate') Purchase Date
+        input.form-control#purchaseDate(type='date', name='purchaseDate', value=asset.purchaseDate, required)
+      .form-group
+        label(for='purchaseCost') Purchase Cost
+        input.form-control#purchaseCost(type='number', name='purchaseCost', value=asset.purchaseCost, step='0.01', required)
+      .form-group
+        label(for='status') Status
+        select.form-control#status(name='status')
+          option(value='available', selected=asset.status === 'available') Available
+          option(value='assigned', selected=asset.status === 'assigned') Assigned
+          option(value='scrapped', selected=asset.status === 'scrapped') Scrapped
+      button.btn.btn-primary(type='submit') Update Asset

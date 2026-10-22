@@ -1,0 +1,21 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Issue Asset
+    if error
+      div.alert.alert-danger= error
+    form(method='POST', action='/asset-assignments/issue')
+      .form-group
+        label(for='employeeId') Employee
+        select.form-control#employeeId(name='employeeId')
+          option(value='') -- Select Employee --
+          each employee in employees
+            option(value=employee.id, selected=req.body?.employeeId == employee.id)= employee.firstName + ' ' + employee.lastName
+      .form-group
+        label(for='assetId') Asset
+        select.form-control#assetId(name='assetId')
+          option(value='') -- Select Asset --
+          each asset in availableAssets
+            option(value=asset.id, selected=req.body?.assetId == asset.id)= asset.assetCode + ' (' + asset.make + ' ' + asset.model + ')'
+      button.btn.btn-primary(type='submit') Issue Asset

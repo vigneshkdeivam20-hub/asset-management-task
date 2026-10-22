@@ -1,0 +1,18 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Scrap Asset
+    if error
+      div.alert.alert-danger= error
+    form(method='POST', action='/asset-assignments/scrap')
+      .form-group
+        label(for='assetId') Asset
+        select.form-control#assetId(name='assetId')
+          option(value='') -- Select Asset --
+          each asset in assets
+            option(value=asset.id, selected=req.body?.assetId == asset.id)= asset.assetCode + ' (' + asset.make + ' ' + asset.model + ')'
+      .form-group
+        label(for='scrapReason') Scrap Reason
+        textarea.form-control#scrapReason(name='scrapReason', rows='3', required)
+      button.btn.btn-primary(type='submit') Scrap Asset

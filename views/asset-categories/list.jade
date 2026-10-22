@@ -1,0 +1,25 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Asset Categories
+    if error
+      div.alert.alert-danger= error
+    form(method='GET', action='/asset-categories/search', class='mb-3')
+      div.input-group
+        input.form-control(type='text', name='searchTerm', placeholder='Search categories...')
+        button.btn.btn-primary(type='submit') Search
+    table#assetCategoryTable.table.table-striped.table-hover
+      thead
+        tr
+          th Category Name
+          th Actions
+      tbody
+        each category in categories
+          tr
+            td= category.name
+            td
+              a.btn.btn-sm.btn-primary(href='/asset-categories/#{category.id}/edit') Edit
+              form(method='POST', action='/asset-categories/#{category.id}/delete')
+                button.btn.btn-sm.btn-danger(type='submit') Delete
+    a.btn.btn-success(href='/asset-categories/create') Create Category

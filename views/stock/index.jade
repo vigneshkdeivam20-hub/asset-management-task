@@ -1,0 +1,32 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Available Stock
+    if error
+      div.alert.alert-danger= error
+    table#stockTable.table.table-striped.table-hover
+      thead
+        tr
+          th Branch
+          th Asset Code
+          th Serial Number
+          th Make
+          th Model
+          th Purchase Cost
+      tbody
+        each branchName, assets in stockByBranch
+          tr
+            td.col-span-6= branchName
+          each asset in assets
+            tr
+              td= asset.Branch.name
+              td= asset.assetCode
+              td= asset.serialNumber || 'N/A'
+              td= asset.make
+              td= asset.model
+              td= asset.purchaseCost
+    .card.mt-4
+      .card-body
+        h5 Total Stock Value
+        p= totalValue.toFixed(2)

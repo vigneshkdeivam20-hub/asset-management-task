@@ -1,0 +1,20 @@
+// views/assets/history.jade
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Asset History for #{asset.assetCode}
+    if error
+      div.alert.alert-danger= error
+    table#historyTable.table.table-striped.table-hover
+      thead
+        tr
+          th Event Type
+          th Timestamp
+          th Details
+      tbody
+        each event in asset.AssetHistory
+          tr
+            td= event.eventType
+            td= moment(event.timestamp).format('YYYY-MM-DD HH:mm:ss')
+            td= event.details

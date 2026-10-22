@@ -1,0 +1,23 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Return Asset
+    if error
+      div.alert.alert-danger= error
+    form(method='POST', action='/asset-assignments/return')
+      .form-group
+        label(for='assignmentId') Assignment
+        select.form-control#assignmentId(name='assignmentId')
+          option(value='') -- Select Assignment --
+          each assignment in assignments
+            option(value=assignment.id, selected=req.body?.assignmentId == assignment.id)= 'Asset: ' + assignment.Asset.assetCode + ', Employee: ' + assignment.Employee.firstName + ' ' + assignment.Employee.lastName
+      .form-group
+        label(for='returnReason') Return Reason
+        select.form-control#returnReason(name='returnReason', required)
+          option(value='') -- Select Reason --
+          option(value='upgrade') Upgrade
+          option(value='repair') Repair
+          option(value='resignation') Resignation
+          option(value='other') Other
+      button.btn.btn-primary(type='submit') Return Asset

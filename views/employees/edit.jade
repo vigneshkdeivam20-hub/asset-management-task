@@ -1,0 +1,32 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Edit Employee
+    if error
+      div.alert.alert-danger= error
+    form(method='POST', action='/employees/#{employee.id}/update')
+      .form-group
+        label(for='employeeCode') Employee Code
+        input.form-control#employeeCode(type='text', name='employeeCode', value=employee.employeeCode, readonly)
+      .form-group
+        label(for='firstName') First Name
+        input.form-control#firstName(type='text', name='firstName', value=employee.firstName, required)
+      .form-group
+        label(for='lastName') Last Name
+        input.form-control#lastName(type='text', name='lastName', value=employee.lastName, required)
+      .form-group
+        label(for='email') Email
+        input.form-control#email(type='email', name='email', value=employee.email, required)
+      .form-group
+        label(for='status') Status
+        select.form-control#status(name='status')
+          option(value='active', selected=employee.status === 'active') Active
+          option(value='inactive', selected=employee.status === 'inactive') Inactive
+      .form-group
+        label(for='branchId') Branch
+        select.form-control#branchId(name='branchId')
+          option(value='') -- Select Branch --
+          each branch in branches
+            option(value= branch.id, selected= employee.branchId == branch.id)= branch.name
+      button.btn.btn-primary(type='submit') Update Employee

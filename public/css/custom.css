@@ -1,0 +1,33 @@
+body {
+  padding-top: 20px;
+}
+
+.table {
+  margin-bottom: 20px;
+}
+
+.form-group {
+  margin-bottom: 15px;
+}
+
+.alert {
+  margin-bottom: 15px;
+}
+
+.btn {
+  margin-right: 5px;
+}
+
+.container {
+  padding: 15px;
+}
+
+.my-4 {
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+}
+
+.card {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}

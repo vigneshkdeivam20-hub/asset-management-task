@@ -1,0 +1,56 @@
+extends ../layouts/main
+
+block content
+  .container.my-4
+    h1 Assets
+    if error
+      div.alert.alert-danger= error
+    form(method='GET', action='/assets/search', class='mb-3')
+      div.input-group
+        input.form-control(type='text', name='searchTerm', placeholder='Search assets...')
+        button.btn.btn-primary(type='submit') Search
+    form(method='GET', action='/assets/category', class='mb-3')
+      select.form-control(name='categoryId')
+        option(value='') -- All Categories --
+        each category in categories
+          option(value=category.id)= category.name
+      button.btn.btn-primary(type='submit') Filter by Category
+    form(method='GET', action='/assets/branch', class='mb-3')
+      select.form-control(name='branchId')
+        option(value='') -- All Branches --
+        each branch in branches
+          option(value=branch.id)= branch.name
+      button.btn.btn-primary(type='submit') Filter by Branch
+    form(method='GET', action='/assets/status', class='mb-3')
+      select.form-control(name='status')
+        option(value='') -- All Statuses --
+        option(value='available') Available
+        option(value='assigned') Assigned
+        option(value='scrapped') Scrapped
+      button.btn.btn-primary(type='submit') Filter by Status
+    table#assetTable.table.table-striped.table-hover
+      thead
+        tr
+          th Asset Code
+          th Serial Number
+          th Make
+          th Model
+          th Category
+          th Branch
+          th Status
+          th Actions
+      tbody
+        each asset in assets
+          tr
+            td= asset.assetCode
+            td= asset.serialNumber || 'N/A'
+            td= asset.make
+            td= asset.model
+            td= asset.AssetCategory?.name || 'N/A'
+            td= asset.Branch?.name || 'N/A'
+            td= asset.status
+            td
+              a.btn.btn-sm.btn-primary(href='/assets/#{asset.id}/edit') Edit
+              form(method='POST', action='/assets/#{asset.id}/delete')
+                button.btn.btn-sm.btn-danger(type='submit') Delete
+    a.btn.btn-success(href='/assets/create') Create Asset
